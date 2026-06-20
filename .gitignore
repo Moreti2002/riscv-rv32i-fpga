@@ -1,0 +1,47 @@
+# ===== Quartus / Questa — pastas regeneráveis (NÃO versionar) =====
+db/
+incremental_db/
+output_files/
+qdb/
+*.qws
+*.rpt
+*.summary
+*.smsg
+*.pin
+*.sld
+*.done
+*.jdi
+*.qpf.bak
+*.qsf.bak
+greybox_tmp/
+hc_output/
+hps_isw_handoff/
+
+# ===== Simulação (Questa/ModelSim) =====
+work/
+transcript
+vsim.wlf
+*.wlf
+modelsim.ini
+*.vstf
+sim/work/
+sim/transcript
+sim/*.wlf
+
+# ===== Saídas de compilação / síntese =====
+*.sof
+*.pof
+*.jam
+*.jbc
+*.svf
+*.rbf
+
+# ===== Instaladores / ferramentas (ficam no D:, nunca no repo) =====
+*.exe
+*.qdz
+
+# ===== SO / editor =====
+Thumbs.db
+desktop.ini
+.DS_Store
+*.swp
