@@ -102,24 +102,22 @@ reports                         # saídas de síntese coletadas
 
 ## 5. TO-DO (lista viva)
 
-### Bloqueado por intervenção manual (declarado)
-- 🟡 **INSTALAR (próximo passo!):** aprovar elevação UAC. Duplo-clique em
-  `scripts\install_launch.ps1` → "Sim". Instaladores já estão no D:. (Tentei via
-  tarefa agendada elevada, mas registrar a tarefa também exige elevação → impasse
-  do UAC; precisa de 1 clique humano.) **Sem instalar, nada roda (nem síntese).**
-- 🟡 **Licença gratuita do Questa** — só para SIMULAR. Gerar na conta Intel
-  (MAC via `ipconfig /all`), salvar `.dat`, `setx LM_LICENSE_FILE`. Ver `docs/GUIA.md` §2.
-  (Quartus/síntese NÃO precisa de licença.)
-- 🔴 **Placa física DE10-Lite** — gravar `.sof`, timing real, demo final. **Não hoje.**
+### CONCLUÍDO nesta sessão (autônomo) ✅
+- [x] Quartus + Questa instalados no D: (após o usuário aprovar 1 UAC).
+- [x] `quartus_map riscv_de10lite` → **0 erros** (ROM carregando, display dirigido).
+- [x] Frente A: sweep 4/8/16/32/64 bits → CSV + 2 gráficos → relatório preenchido.
+- [x] `quartus_sh --flow compile` → **.sof gerado**, 14.220 LEs (29%), timing OK
+      (multicycle 16 → setup slack +294 ns).
+- [x] **Validação funcional: 5/5 testbenches ALL TESTS PASSED** via **GHDL**
+      (livre, sem licença) — `bash sim/run_all_ghdl.sh`. Inclui CPU completa e
+      calculadora (7+3, 3−7=−4, 12&10, 12|3).
 
-### Autônomo (Claude faz assim que instalar)
-- [ ] `quartus_map riscv_de10lite` → confirmar que todo o VHDL elabora limpo.
-- [ ] `quartus_sh -t scripts/sweep_alu.tcl` + `python scripts/plot_sweep.py`
-      → dados/gráficos da Frente A (sem licença) → preencher `docs/relatorio.md`.
-- [ ] `quartus_sh --flow compile riscv_de10lite` → LEs/registradores/M9K do processador.
-
-### Esperando licença do Questa
-- [ ] `cd sim && vsim -c -do run_all.do` → todos os testbenches (esperado: ALL TESTS PASSED).
+### Pendência manual restante (declarada)
+- 🔴 **Placa física DE10-Lite** — gravar `output_files/riscv_de10lite.sof` (já
+  pronto), validar timing real e demonstração. **Único passo que falta.**
+- 🟢 **(Opcional) Questa** — instalado, mas precisa de licença + correção da UCRT
+  (`api-ms-win-crt-*` ausentes; ver `GUIA.md §3b`). Não é necessário: o GHDL já
+  validou tudo. Só relevante se a disciplina exigir o Questa especificamente.
 
 ---
 
@@ -143,8 +141,15 @@ reports                         # saídas de síntese coletadas
 - **2026-06-19 (cont.)** — Escrito e revisado TODO o projeto numa sessão: Frente A
   (ULA+sweep), núcleo RV32I single-cycle completo (7 etapas), I/O+BCD+7seg+top,
   montador próprio (verificado à mão), 5 testbenches, projeto da placa com pinos
-  reais, docs. Revisão estática adversarial: 0 erros. Pendente só: instalar + licença
-  + placa. Nota Questa: usar `vsim -voptargs=+acc` (external name no tb_calc).
+  reais, docs. Revisão estática adversarial: 0 erros.
+- **2026-06-20** — Usuário aprovou a instalação (UAC). Sessão de EXECUÇÃO autônoma:
+  (1) Quartus instalou (~2h, disco lento). (2) `quartus_map`: achei e corrigi 2 bugs
+  reais — `hread` não suportado em síntese e file I/O ignorado pelo Quartus 22.1;
+  troquei a ROM por **pacote VHDL gerado** (asm.py --vhdl). (3) Frente A: dados reais
+  coletados, gráficos. (4) Compile completo: .sof + timing fechado via multicycle.
+  (5) Questa esbarrou na UCRT (`api-ms-win-crt-*` ausentes) + licença → instalei
+  **GHDL** (livre, portável, sem licença) e **validei os 5 testbenches: ALL PASSED**.
+  Restou só a **placa física**.
 
 ---
 

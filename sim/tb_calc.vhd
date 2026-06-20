@@ -29,9 +29,6 @@ architecture sim of tb_calc is
     signal errors : natural := 0;
     constant TCLK : time := 10 ns;
 
-    -- espia o valor exibido (registrador interno do top)
-    alias disp is << signal dut.disp_reg : std_logic_vector(31 downto 0) >>;
-
     function sw_of(a, b, op : integer) return std_logic_vector is
         variable r : std_logic_vector(9 downto 0);
     begin
@@ -59,12 +56,15 @@ begin
         end procedure;
 
         procedure chk(name : string; a, b, op, expected : integer) is
+            -- espia o registrador interno do top via external name (em runtime)
+            variable dv : std_logic_vector(31 downto 0);
         begin
             SW <= sw_of(a, b, op);
             run_cycles(400);              -- deixa o laço recalcular
             wait for 1 ns;
-            if signed(disp) /= to_signed(expected, 32) then
-                report "FAIL [" & name & "] disp=" & integer'image(to_integer(signed(disp))) &
+            dv := << signal dut.disp_reg : std_logic_vector(31 downto 0) >>;
+            if signed(dv) /= to_signed(expected, 32) then
+                report "FAIL [" & name & "] disp=" & integer'image(to_integer(signed(dv))) &
                        " esperado=" & integer'image(expected) severity error;
                 errors <= errors + 1;
             else

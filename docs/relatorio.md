@@ -105,11 +105,29 @@ Testbenches auto-verificáveis (Questa):
 - `tb_core` — programa que exercita toda a ISA, conferindo registradores.
 - `tb_calc` — calculadora ( +, −, &, | ), conferindo o valor exibido.
 
-A elaboração de toda a hierarquia já foi confirmada na prática: `quartus_map
-riscv_de10lite` compila com **0 erros** (e a ROM da calculadora é lida corretamente
-— o display é dirigido pela CPU, sem saídas constantes). A **execução funcional** dos
-testbenches no Questa fica pendente apenas da licença gratuita (ver `GUIA.md §2`);
-esperado: `ALL TESTS PASSED` em todos. _[preencher saída do `run_all.do` após a licença]_
+**Resultado — todos os testbenches passaram** (GHDL 6.0.0, VHDL-2008):
+
+| Testbench | O que valida | Resultado |
+|---|---|---|
+| `tb_alu`     | ULA: casos-armadilha SLT/SLTU, SRA/SRL, shamt | **ALL TESTS PASSED** |
+| `tb_regfile` | banco 32×32, x0 imutável, 2 leituras | **ALL TESTS PASSED** |
+| `tb_bin2bcd` | conversão decimal + truncamento | **ALL TESTS PASSED** |
+| `tb_core`    | CPU completa: 18 checagens (tipo-R/I, branches, LW/SW, JAL/JALR, LUI/AUIPC) | **ALL TESTS PASSED** |
+| `tb_calc`    | calculadora: 7+3=10, 3−7=−4, 12&10=8, 12\|3=15 | **ALL TESTS PASSED** |
+
+Em particular, `tb_core` prova o datapath inteiro executando um programa real, e
+`tb_calc` prova a calculadora completa rodando como **programa assembly no próprio
+processador**, com o resultado negativo (−4) exibido corretamente em decimal com
+sinal. Reproduzível por `bash sim/run_all_ghdl.sh`.
+
+A elaboração também foi confirmada em síntese: `quartus_map riscv_de10lite` com
+**0 erros** e a ROM dirigindo o display.
+
+> Nota de ferramenta: a validação usou **GHDL** (simulador VHDL livre, sem licença).
+> O Questa do plano também foi instalado, mas nesta máquina esbarrou na Universal
+> CRT (DLLs `api-ms-win-crt-*` ausentes do sistema) e exige a licença gratuita; o
+> GHDL é equivalente para esta validação (mesmo VHDL-2008, testbenches auto-
+> verificáveis). Ver `GUIA.md`.
 
 ### 3.6 Síntese do processador completo
 

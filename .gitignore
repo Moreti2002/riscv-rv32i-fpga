@@ -39,6 +39,11 @@ sim/*.wlf
 # ===== Projetos temporários do sweep da Frente A (regeneráveis) =====
 reports/fmax/
 
+# ===== Artefatos de simulação GHDL (regeneráveis) =====
+reports/ghdl/
+*.cf
+*.dll
+
 # ===== Instaladores / ferramentas (ficam no D:, nunca no repo) =====
 *.exe
 *.qdz

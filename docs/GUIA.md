@@ -70,17 +70,30 @@ gratuita, vinculada ao MAC da máquina:
 
 ---
 
-## 3. Simulação (Questa) — valida a lógica
+## 3. Simulação — valida a lógica
 
-A partir de `sim/`:
+### 3a. GHDL (recomendado aqui — livre, sem licença) ✅ usado neste projeto
+GHDL 6.0.0 (mcode) extraído em `C:\Users\joaom\ghdl\`. A partir da RAIZ do repo:
 ```bash
-# todos os testbenches de uma vez:
-vsim -c -do run_all.do
-
-# ou um por um, ex. a ULA:
-vsim -c -do run_alu.do
+export PATH="/c/Users/joaom/ghdl/bin:$PATH"
+bash sim/run_all_ghdl.sh
 ```
-**Sucesso** = cada testbench imprime `ALL TESTS PASSED` e nenhum `FAIL`.
+**Sucesso** = `TODOS OS TESTBENCHES PASSARAM` (cada um imprime `ALL TESTS PASSED`).
+Já executado: os 5 testbenches passam (ver `docs/relatorio.md §3.5`).
+
+### 3b. Questa (opcional — o do plano original)
+A partir de `sim/`: `vsim -c -do run_all.do` (ou `run_alu.do`).
+**Pré-requisitos nesta máquina:**
+- **Licença gratuita** (seção 2).
+- **Universal CRT:** o Questa instalado aqui falha com `api-ms-win-crt-*.dll`
+  ausentes. Correção (PowerShell **como Administrador**): copiar as DLLs para a
+  pasta do Questa —
+  ```powershell
+  Copy-Item C:\Windows\System32\downlevel\api-ms-win-crt-*.dll `
+            D:\altera_lite\22.1\questa_fse\win64\ -Force
+  ```
+  (sem elevação dá "Access denied"). Como o GHDL já valida tudo, isto é opcional.
+
 Testbenches: `tb_alu`, `tb_regfile`, `tb_bin2bcd`, `tb_core` (programa completo),
 `tb_calc` (calculadora).
 

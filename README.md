@@ -14,10 +14,13 @@ um experimento de **escalabilidade da ULA** (área/Fmax × largura).
 - `projeto_riscv_de10lite_unificado.md` e `perguntas_respostas.md` — especificação.
 
 ## Status rápido
-- ✅ Todo o código (VHDL, montador, testbenches, scripts, projeto da placa) escrito e
-  estaticamente revisado (0 erros).
-- ⏳ Falta: **instalar** Quartus/Questa (1 clique de elevação — `scripts\install_launch.ps1`),
-  gerar a **licença gratuita do Questa** (só p/ simular) e a **placa física** (gravação/demo).
+- ✅ Código completo (VHDL, montador, testbenches, scripts, projeto da placa).
+- ✅ **Síntese:** `quartus_map` 0 erros; compile completo gera o `.sof`; 14.220 LEs
+  (29%), timing fechado (multicycle 16 → slack +294 ns).
+- ✅ **Frente A:** dados reais (LEs/Fmax × 4/8/16/32/64 bits) + gráficos.
+- ✅ **Validação funcional:** 5/5 testbenches **ALL TESTS PASSED** (GHDL) — inclui a
+  CPU completa e a calculadora. Rode: `bash sim/run_all_ghdl.sh`.
+- 🔴 **Falta só:** gravar o `.sof` na **placa física** DE10-Lite e demonstrar.
 
 ## Layout
 `src/` VHDL · `sim/` testbenches · `scripts/` montador+automação · `asm/` programas ·
