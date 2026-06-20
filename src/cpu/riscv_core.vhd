@@ -25,6 +25,7 @@ entity riscv_core is
     port (
         clk         : in  std_logic;
         rst         : in  std_logic;                      -- síncrono, ativo-alto
+        en          : in  std_logic := '1';               -- clock enable (passo da CPU)
         -- barramento de instruções
         pc_out      : out std_logic_vector(31 downto 0);
         instr       : in  std_logic_vector(31 downto 0);
@@ -66,6 +67,7 @@ architecture rtl of riscv_core is
     signal alu_zero                : std_logic;
     signal wb_data                 : std_logic_vector(31 downto 0);
     signal take_branch             : std_logic;
+    signal rf_we                   : std_logic;
 begin
     ---------------------------------------------------------------------------
     -- Campos da instrução
@@ -92,10 +94,12 @@ begin
     ---------------------------------------------------------------------------
     -- Banco de registradores
     ---------------------------------------------------------------------------
+    rf_we <= reg_write and en;
+
     u_rf : entity work.regfile
         generic map (XLEN => 32)
         port map (
-            clk => clk, we => reg_write,
+            clk => clk, we => rf_we,
             rs1 => rs1, rs2 => rs2, rd => rd_addr, wd => wb_data,
             rd1 => rd1, rd2 => rd2,
             dbg_addr => dbg_reg_addr, dbg_data => dbg_reg_data
@@ -130,7 +134,7 @@ begin
     ---------------------------------------------------------------------------
     dmem_addr   <= alu_res;     -- rs1 + imm
     dmem_wdata  <= rd2;
-    dmem_we     <= mem_write;
+    dmem_we     <= mem_write and en;
     dmem_re     <= mem_read;
     dmem_funct3 <= funct3;
 
@@ -170,7 +174,7 @@ begin
         if rising_edge(clk) then
             if rst = '1' then
                 pc <= (others => '0');
-            else
+            elsif en = '1' then
                 pc <= pc_next;
             end if;
         end if;

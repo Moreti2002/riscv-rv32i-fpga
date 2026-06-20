@@ -1,0 +1,15 @@
+# Normaliza fins de linha; trata fontes como texto.
+* text=auto eol=lf
+*.vhd  text eol=lf
+*.tcl  text eol=lf
+*.sdc  text eol=lf
+*.do   text eol=lf
+*.py   text eol=lf
+*.s    text eol=lf
+*.md   text eol=lf
+*.hex  text eol=lf
+*.mif  text eol=lf
+*.qsf  text eol=lf
+*.qpf  text eol=lf
+# Binários (não tocar).
+*.png  binary

@@ -1,0 +1,6 @@
+QUARTUS_VERSION = "22.1"
+# Projeto: Processador RISC-V RV32I single-cycle na DE10-Lite. Autor: João Moreti.
+DATE = "2026/06/19"
+
+# Revisões
+PROJECT_REVISION = "riscv_de10lite"
