@@ -20,6 +20,8 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.riscv_pkg.all;
+use work.test_core_rom_pkg.all;
 
 entity tb_core is
 end entity tb_core;
@@ -41,7 +43,7 @@ architecture sim of tb_core is
 begin
 
     dut : entity work.riscv_system
-        generic map (IMEM_INIT => "../mem/test_core.hex", WORDS => 256)
+        generic map (WORDS => 256, INIT => PROGRAM)
         port map (clk => clk, rst => rst, pc_out => pc,
                   dbg_reg_addr => dbg_addr, dbg_reg_data => dbg_data);
 

@@ -274,6 +274,25 @@ def write_hex(words, path):
             f.write(f"{w & 0xFFFFFFFF:08X}\n")
 
 
+def write_vhdl(words, path, pkg):
+    """Emite um pacote VHDL com a ROM como constante word_array (portável p/
+    Quartus e Questa). Usa work.riscv_pkg.word_array."""
+    with open(path, "w") as f:
+        f.write("-- Gerado por asm.py — NÃO editar à mão.\n")
+        f.write("-- ROM de instruções como constante VHDL.\n")
+        f.write("library ieee;\nuse ieee.std_logic_1164.all;\n")
+        f.write("use work.riscv_pkg.all;\n\n")
+        f.write(f"package {pkg} is\n")
+        if words:
+            f.write(f"    constant PROGRAM : word_array(0 to {len(words)-1}) := (\n")
+            lines = [f'        x"{w & 0xFFFFFFFF:08X}"' for w in words]
+            f.write(",\n".join(lines))
+            f.write("\n    );\n")
+        else:
+            f.write('    constant PROGRAM : word_array(0 to 0) := (0 => x"00000000");\n')
+        f.write(f"end package {pkg};\n")
+
+
 def write_mif(words, path, depth):
     with open(path, "w") as f:
         f.write(f"DEPTH = {depth};\nWIDTH = 32;\n")
@@ -290,6 +309,8 @@ def main():
     ap.add_argument("src")
     ap.add_argument("-o", "--out", required=True, help="arquivo .hex de saída")
     ap.add_argument("--mif", help="também gera .mif")
+    ap.add_argument("--vhdl", help="também gera pacote VHDL da ROM")
+    ap.add_argument("--pkg", help="nome do pacote VHDL (default: derivado do --vhdl)")
     ap.add_argument("--words", type=int, default=256)
     args = ap.parse_args()
 
@@ -308,6 +329,13 @@ def main():
     if args.mif:
         write_mif(words, args.mif, args.words)
         print(f"gerado {args.mif}")
+    if args.vhdl:
+        pkg = args.pkg
+        if not pkg:
+            import os
+            pkg = os.path.splitext(os.path.basename(args.vhdl))[0]
+        write_vhdl(words, args.vhdl, pkg)
+        print(f"gerado {args.vhdl} (package {pkg})")
 
 
 if __name__ == "__main__":

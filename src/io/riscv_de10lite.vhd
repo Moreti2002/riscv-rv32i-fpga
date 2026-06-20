@@ -22,11 +22,12 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use work.riscv_pkg.all;
+use work.calc_rom_pkg.all;                 -- ROM da calculadora (gerada por asm.py)
 
 entity riscv_de10lite is
     generic (
-        IMEM_INIT : string  := "calc.hex";
-        CPU_DIV   : natural := 4            -- passo da CPU a cada 2^4 = 16 ciclos
+        CPU_DIV : natural := 4             -- passo da CPU a cada 2^4 = 16 ciclos
     );
     port (
         MAX10_CLK1_50 : in  std_logic;                       -- 50 MHz (pino P11)
@@ -112,7 +113,7 @@ begin
     -- Memória de instruções
     ---------------------------------------------------------------------------
     u_imem : entity work.imem
-        generic map (WORDS => 256, INIT_FILE => IMEM_INIT)
+        generic map (WORDS => 256, INIT => PROGRAM)
         port map (addr => pc, instr => instr);
 
     ---------------------------------------------------------------------------

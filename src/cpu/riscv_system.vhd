@@ -12,11 +12,12 @@
 -------------------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
+use work.riscv_pkg.all;
 
 entity riscv_system is
     generic (
-        IMEM_INIT : string  := "program.hex";
-        WORDS     : natural := 256
+        WORDS : natural    := 256;
+        INIT  : word_array := (0 => (others => '0'))
     );
     port (
         clk          : in  std_logic;
@@ -49,7 +50,7 @@ begin
         );
 
     u_imem : entity work.imem
-        generic map (WORDS => WORDS, INIT_FILE => IMEM_INIT)
+        generic map (WORDS => WORDS, INIT => INIT)
         port map (addr => pc, instr => instr);
 
     u_dmem : entity work.dmem

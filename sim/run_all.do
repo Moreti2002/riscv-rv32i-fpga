@@ -12,6 +12,8 @@ vlib work
 
 # --- Pacote e blocos ---
 vcom -2008 ../src/cpu/riscv_pkg.vhd
+vcom -2008 ../mem/calc_rom_pkg.vhd
+vcom -2008 ../mem/test_core_rom_pkg.vhd
 vcom -2008 ../src/alu/alu.vhd
 vcom -2008 ../src/alu/alu_fmax_wrapper.vhd
 vcom -2008 ../src/cpu/regfile.vhd

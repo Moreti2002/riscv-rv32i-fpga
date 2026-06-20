@@ -14,6 +14,11 @@ package riscv_pkg is
 
     constant XLEN : natural := 32;
 
+    -- Vetor de palavras de 32 bits — usado para inicializar a ROM de instruções
+    -- como CONSTANTE VHDL (gerada pelo montador), evitando leitura de arquivo em
+    -- síntese (o Quartus 22.1 não executa file I/O na elaboração).
+    type word_array is array (natural range <>) of std_logic_vector(31 downto 0);
+
     ---------------------------------------------------------------------------
     -- Opcodes (instr[6:0]) usados nesta cobertura "intermediária".
     ---------------------------------------------------------------------------

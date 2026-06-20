@@ -1,0 +1,98 @@
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 22.1std.2 Build 922 07/20/2023 SC Lite Edition
+    Info: Copyright (C) 2023  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details, at
+    Info: https://fpgasoftware.intel.com/eula.
+    Info: Processing started: Sat Jun 20 02:07:18 2026
+Info: Command: quartus_map riscv_de10lite
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 1 design units, including 0 entities, in source file src/cpu/riscv_pkg.vhd
+    Info (12022): Found design unit 1: riscv_pkg File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/riscv_pkg.vhd Line: 13
+Info (12021): Found 1 design units, including 0 entities, in source file mem/calc_rom_pkg.vhd
+    Info (12022): Found design unit 1: calc_rom_pkg File: C:/Users/joaom/Documents/Trab_AOC/mem/calc_rom_pkg.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file src/alu/alu.vhd
+    Info (12022): Found design unit 1: alu-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/alu/alu.vhd Line: 45
+    Info (12023): Found entity 1: alu File: C:/Users/joaom/Documents/Trab_AOC/src/alu/alu.vhd Line: 32
+Info (12021): Found 2 design units, including 1 entities, in source file src/cpu/regfile.vhd
+    Info (12022): Found design unit 1: regfile-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/regfile.vhd Line: 42
+    Info (12023): Found entity 1: regfile File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/regfile.vhd Line: 23
+Info (12021): Found 2 design units, including 1 entities, in source file src/cpu/imm_gen.vhd
+    Info (12022): Found design unit 1: imm_gen-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/imm_gen.vhd Line: 32
+    Info (12023): Found entity 1: imm_gen File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/imm_gen.vhd Line: 24
+Info (12021): Found 2 design units, including 1 entities, in source file src/cpu/control.vhd
+    Info (12022): Found design unit 1: control-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/control.vhd Line: 39
+    Info (12023): Found entity 1: control File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/control.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file src/cpu/branch_unit.vhd
+    Info (12022): Found design unit 1: branch_unit-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/branch_unit.vhd Line: 29
+    Info (12023): Found entity 1: branch_unit File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/branch_unit.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file src/cpu/imem.vhd
+    Info (12022): Found design unit 1: imem-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/imem.vhd Line: 30
+    Info (12023): Found entity 1: imem File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/imem.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file src/cpu/dmem.vhd
+    Info (12022): Found design unit 1: dmem-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/dmem.vhd Line: 32
+    Info (12023): Found entity 1: dmem File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/dmem.vhd Line: 19
+Info (12021): Found 2 design units, including 1 entities, in source file src/cpu/riscv_core.vhd
+    Info (12022): Found design unit 1: riscv_core-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/riscv_core.vhd Line: 45
+    Info (12023): Found entity 1: riscv_core File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/riscv_core.vhd Line: 24
+Info (12021): Found 2 design units, including 1 entities, in source file src/io/bin2bcd.vhd
+    Info (12022): Found design unit 1: bin2bcd-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/io/bin2bcd.vhd Line: 31
+    Info (12023): Found entity 1: bin2bcd File: C:/Users/joaom/Documents/Trab_AOC/src/io/bin2bcd.vhd Line: 20
+Info (12021): Found 2 design units, including 1 entities, in source file src/io/seg7.vhd
+    Info (12022): Found design unit 1: seg7-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/io/seg7.vhd Line: 25
+    Info (12023): Found entity 1: seg7 File: C:/Users/joaom/Documents/Trab_AOC/src/io/seg7.vhd Line: 18
+Info (12021): Found 2 design units, including 1 entities, in source file src/io/display_unit.vhd
+    Info (12022): Found design unit 1: display_unit-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/io/display_unit.vhd Line: 36
+    Info (12023): Found entity 1: display_unit File: C:/Users/joaom/Documents/Trab_AOC/src/io/display_unit.vhd Line: 22
+Info (12021): Found 2 design units, including 1 entities, in source file src/io/riscv_de10lite.vhd
+    Info (12022): Found design unit 1: riscv_de10lite-rtl File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 46
+    Info (12023): Found entity 1: riscv_de10lite File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 28
+Info (12127): Elaborating entity "riscv_de10lite" for the top level hierarchy
+Warning (10036): Verilog HDL or VHDL warning at riscv_de10lite.vhd(59): object "dmem_re" assigned a value but never read File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 59
+Warning (10036): Verilog HDL or VHDL warning at riscv_de10lite.vhd(60): object "dmem_funct3" assigned a value but never read File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 60
+Info (12128): Elaborating entity "riscv_core" for hierarchy "riscv_core:u_core" File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 102
+Warning (10036): Verilog HDL or VHDL warning at riscv_core.vhd(67): object "alu_zero" assigned a value but never read File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/riscv_core.vhd Line: 67
+Info (12128): Elaborating entity "control" for hierarchy "riscv_core:u_core|control:u_ctrl" File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/riscv_core.vhd Line: 85
+Info (12128): Elaborating entity "regfile" for hierarchy "riscv_core:u_core|regfile:u_rf" File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/riscv_core.vhd Line: 99
+Info (12128): Elaborating entity "imm_gen" for hierarchy "riscv_core:u_core|imm_gen:u_imm" File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/riscv_core.vhd Line: 111
+Info (12128): Elaborating entity "alu" for hierarchy "riscv_core:u_core|alu:u_alu" File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/riscv_core.vhd Line: 120
+Info (12128): Elaborating entity "branch_unit" for hierarchy "riscv_core:u_core|branch_unit:u_br" File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/riscv_core.vhd Line: 128
+Info (12128): Elaborating entity "imem" for hierarchy "imem:u_imem" File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 115
+Info (12128): Elaborating entity "dmem" for hierarchy "dmem:u_dmem" File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 123
+Info (12128): Elaborating entity "display_unit" for hierarchy "display_unit:u_disp" File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 170
+Info (12128): Elaborating entity "bin2bcd" for hierarchy "display_unit:u_disp|bin2bcd:u_bcd" File: C:/Users/joaom/Documents/Trab_AOC/src/io/display_unit.vhd Line: 56
+Info (12128): Elaborating entity "seg7" for hierarchy "display_unit:u_disp|seg7:\g_seg:0:u" File: C:/Users/joaom/Documents/Trab_AOC/src/io/display_unit.vhd Line: 98
+Info (276014): Found 1 instances of uninferred RAM logic
+    Info (276007): RAM logic "dmem:u_dmem|ram" is uninferred due to asynchronous read logic File: C:/Users/joaom/Documents/Trab_AOC/src/cpu/dmem.vhd Line: 34
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "HEX0[7]" is stuck at VCC File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 37
+    Warning (13410): Pin "HEX1[7]" is stuck at VCC File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 38
+    Warning (13410): Pin "HEX2[7]" is stuck at VCC File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 39
+    Warning (13410): Pin "HEX3[7]" is stuck at VCC File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 40
+    Warning (13410): Pin "HEX4[7]" is stuck at VCC File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 41
+    Warning (13410): Pin "HEX5[7]" is stuck at VCC File: C:/Users/joaom/Documents/Trab_AOC/src/io/riscv_de10lite.vhd Line: 42
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 18278 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 13 input pins
+    Info (21059): Implemented 58 output pins
+    Info (21061): Implemented 18207 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 11 warnings
+    Info: Peak virtual memory: 4928 megabytes
+    Info: Processing ended: Sat Jun 20 02:09:05 2026
+    Info: Elapsed time: 00:01:47
+    Info: Total CPU time (on all processors): 00:03:00

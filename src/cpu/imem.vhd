@@ -3,23 +3,23 @@
 --
 -- Projeto: Processador RISC-V RV32I single-cycle na DE10-Lite.  Autor: João Moreti.
 --
---   * 256 palavras de 32 bits (cabe num bloco M9K);
+--   * 256 palavras de 32 bits;
 --   * endereçada por byte: a palavra é addr(9:2) (PC avança de 4 em 4);
 --   * leitura COMBINACIONAL (modelo single-cycle: busca a instrução no mesmo ciclo);
---   * inicializada a partir de um arquivo .hex (uma palavra de 8 dígitos hex por
---     linha, palavra 0 na 1ª linha). Se o arquivo não abrir, ROM = zeros.
---
--- O .hex é gerado pelo montador (asm/ -> mem/) — ver scripts/asm.py.
+--   * inicializada por um generic de array (INIT), preenchido por um pacote VHDL
+--     gerado pelo montador (asm.py --vhdl). Isso funciona igual em Quartus
+--     (síntese) e Questa (simulação) — diferente de ler .hex por textio, que o
+--     Quartus 22.1 ignora na elaboração.
 -------------------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use std.textio.all;
+use work.riscv_pkg.all;
 
 entity imem is
     generic (
-        WORDS     : natural := 256;
-        INIT_FILE : string  := "program.hex"
+        WORDS : natural    := 256;
+        INIT  : word_array := (0 => (others => '0'))   -- conteúdo da ROM
     );
     port (
         addr  : in  std_logic_vector(31 downto 0);  -- endereço de byte (PC)
@@ -30,31 +30,19 @@ end entity imem;
 architecture rtl of imem is
     type rom_t is array (0 to WORDS-1) of std_logic_vector(31 downto 0);
 
-    impure function init_rom(fname : string) return rom_t is
-        file     f      : text;
-        variable l      : line;
-        variable w      : std_logic_vector(31 downto 0);
-        variable rom    : rom_t := (others => (others => '0'));
-        variable status : file_open_status;
-        variable i      : integer := 0;
+    -- Copia INIT para uma ROM de tamanho fixo WORDS (resto = zero).
+    function build_rom(src : word_array) return rom_t is
+        variable r : rom_t := (others => (others => '0'));
     begin
-        file_open(status, f, fname, read_mode);
-        if status /= open_ok then
-            return rom;                       -- arquivo ausente: tudo zero
-        end if;
-        while (not endfile(f)) and (i < WORDS) loop
-            readline(f, l);
-            if l.all'length > 0 then          -- ignora linhas em branco
-                hread(l, w);
-                rom(i) := w;
-                i := i + 1;
+        for i in src'range loop
+            if i <= WORDS-1 then
+                r(i) := src(i);
             end if;
         end loop;
-        file_close(f);
-        return rom;
+        return r;
     end function;
 
-    constant ROM : rom_t := init_rom(INIT_FILE);
+    constant ROM : rom_t := build_rom(INIT);
 
     -- Índice de palavra (descarta os 2 bits baixos do endereço de byte).
     signal widx : integer range 0 to WORDS-1;

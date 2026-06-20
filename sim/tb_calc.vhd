@@ -43,7 +43,7 @@ architecture sim of tb_calc is
 begin
 
     dut : entity work.riscv_de10lite
-        generic map (IMEM_INIT => "../mem/calc.hex", CPU_DIV => 1)
+        generic map (CPU_DIV => 1)
         port map (MAX10_CLK1_50 => clk, KEY => KEY, SW => SW, LEDR => LEDR,
                   HEX0 => HEX0, HEX1 => HEX1, HEX2 => HEX2,
                   HEX3 => HEX3, HEX4 => HEX4, HEX5 => HEX5);
