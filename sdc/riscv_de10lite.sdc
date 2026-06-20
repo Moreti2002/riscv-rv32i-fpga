@@ -5,15 +5,18 @@
 create_clock -name MAX10_CLK1_50 -period 20.000 [get_ports MAX10_CLK1_50]
 derive_clock_uncertainty
 
-# A CPU avança por clock-enable (en) a cada 2^CPU_DIV ciclos (default 16). O
-# caminho combinacional single-cycle (ULA, memórias) tem, portanto, vários
-# ciclos para assentar. Se o Timing Analyzer apontar violação no caminho da CPU
-# rodando a 50 MHz "single-cycle", há duas saídas, nesta ordem de preferência:
-#   1) aumentar CPU_DIV (mais folga, calculadora continua instantânea ao olho);
-#   2) declarar multicycle aqui (set_multicycle_path) entre os registradores da
-#      CPU, coerente com o fator de enable.
-# Como o enable cobre PC + banco de registradores + RAM, o caminho de dados não
-# é crítico para a demonstração da calculadora.
+# MULTICYCLE — coerente com o clock-enable.
+# Todo registrador do design (PC, banco de registradores, RAM de dados,
+# registradores de I/O) só é habilitado a cada 2^CPU_DIV = 16 ciclos de 50 MHz
+# (sinal "en", derivado do contador cnt). Logo, um dado lançado num pulso de
+# enable só é capturado 16 ciclos depois: o caminho dispõe de 16*20 ns = 320 ns,
+# não de 20 ns. Informamos isso ao Timing Analyzer com um multicycle de 16.
+#
+# É seguro aplicar globalmente: o ÚNICO elemento que comuta a cada ciclo é o
+# contador cnt (4 bits) que gera o "en" — trivialmente rápido, fecha folgado
+# mesmo sendo relaxado. Todo o resto é genuinamente multiciclo (1-em-16).
+set_multicycle_path -setup -end 16 -from [get_clocks MAX10_CLK1_50] -to [get_clocks MAX10_CLK1_50]
+set_multicycle_path -hold  -end 15 -from [get_clocks MAX10_CLK1_50] -to [get_clocks MAX10_CLK1_50]
 
 # Entradas assíncronas (chaves/botões) e saídas (LEDs/HEX) não têm requisito de
 # timing rígido — relaxa para não poluir o relatório.

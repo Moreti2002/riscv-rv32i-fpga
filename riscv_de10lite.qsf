@@ -199,3 +199,5 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[4]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[5]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[6]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[7]
+
+set_global_assignment -name LAST_QUARTUS_VERSION "22.1std.2 Lite Edition"

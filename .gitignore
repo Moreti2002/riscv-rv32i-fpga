@@ -36,6 +36,9 @@ sim/*.wlf
 *.svf
 *.rbf
 
+# ===== Projetos temporários do sweep da Frente A (regeneráveis) =====
+reports/fmax/
+
 # ===== Instaladores / ferramentas (ficam no D:, nunca no repo) =====
 *.exe
 *.qdz
