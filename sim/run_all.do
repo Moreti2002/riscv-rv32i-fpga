@@ -36,7 +36,8 @@ vcom -2008 tb_calc.vhd
 
 proc run_tb {top} {
     puts "\n================= $top ================="
-    vsim -c work.$top
+    # +acc preserva visibilidade de sinais internos (necessário p/ external names)
+    vsim -c -voptargs=+acc work.$top
     run -all
     quit -sim
 }

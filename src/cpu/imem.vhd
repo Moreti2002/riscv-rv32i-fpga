@@ -44,7 +44,7 @@ architecture rtl of imem is
         end if;
         while (not endfile(f)) and (i < WORDS) loop
             readline(f, l);
-            if l'length > 0 then
+            if l.all'length > 0 then          -- ignora linhas em branco
                 hread(l, w);
                 rom(i) := w;
                 i := i + 1;
