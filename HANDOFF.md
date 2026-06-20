@@ -1,7 +1,7 @@
 # HANDOFF — Processador RISC-V RV32I na DE10-Lite (documento vivo)
 
 > **Para qualquer chat/pessoa que pegar este projeto:** leia este arquivo primeiro.
-> Ele é **vivo** — atualizado a cada avanço. Última atualização: **2026-06-19**.
+> Ele é **vivo** — atualizado a cada avanço. Última atualização: **2026-06-20**.
 >
 > Os dois documentos-fonte de especificação são:
 > - `projeto_riscv_de10lite_unificado.md` — plano + atualizações.
@@ -9,6 +9,36 @@
 >
 > Este HANDOFF **não substitui** esses dois; ele resume o contexto e rastreia o
 > estado real (o que está feito, pendente, e como retomar).
+
+---
+
+## ⭐ PRÓXIMA SESSÃO (2026-06-20+): gravar na placa — ÚNICO passo que falta
+
+**O projeto está 100% pronto e validado em software.** Falta só a parte física,
+que o aluno fará com a DE10-Lite em mãos. Estado: tudo commitado, `.sof` pronto em
+`output_files/riscv_de10lite.sof`, ferramentas instaladas.
+
+**Passo a passo (com a placa conectada via USB):**
+```bash
+# (Git Bash) coloca o Quartus no PATH
+export PATH="/d/altera_lite/22.1/quartus/bin64:$PATH"
+
+# 1) confirmar que o USB-Blaster/placa é detectado:
+jtagconfig         # deve listar "USB-Blaster" e o dispositivo 10M50
+
+# 2) gravar o bitstream (a partir da raiz do repo):
+cd /c/Users/joaom/Documents/Trab_AOC
+quartus_pgm -m jtag -o "p;output_files/riscv_de10lite.sof"
+```
+**Demonstração da calculadora:** `SW[3:0]`=A, `SW[7:4]`=B, `SW[9:8]`=operação
+(00=A+B, 01=A−B, 10=A&B, 11=A|B). Resultado em **decimal com sinal** nos HEX;
+`LEDR9`=overflow, `LEDR8`=sinal negativo; **KEY0**=reset. Detalhes em `docs/GUIA.md §7`.
+
+**Se a placa não for detectada:** instalar o driver do USB-Blaster II (pode exigir
+elevação) — em `D:\altera_lite\22.1\quartus\drivers\usb-blaster-ii\`.
+
+**Se quiser re-sintetizar antes:** `quartus_sh --flow compile riscv_de10lite`.
+**Re-rodar a simulação:** `export PATH="/c/Users/joaom/ghdl/bin:$PATH"; bash sim/run_all_ghdl.sh`.
 
 ---
 
@@ -59,7 +89,16 @@
     `https://downloads.intel.com/akdlm/software/acdsinst/22.1std.2/922/ib_installers/<arquivo>`
   - Arquivos: `QuartusLiteSetup-22.1std.2.922-windows.exe` (~1,74 GB),
     `max10-22.1std.2.922.qdz` (~300 MB), `QuestaSetup-22.1std.2.922-windows.exe` (~818 MB).
-- **Quartus será instalado em:** `D:\altera_lite\22.1` (modo silencioso).
+- **Ferramentas INSTALADAS (estado real):**
+  - **Quartus Prime Lite 22.1.2:** `D:\altera_lite\22.1\quartus\bin64\`
+    (`quartus_sh`, `quartus_map`, `quartus_pgm`, `quartus_sta`). Sem licença. OK.
+  - **GHDL 6.0.0 (mcode):** `C:\Users\joaom\ghdl\bin\ghdl.exe`. Simulador usado para
+    validar (livre, sem licença). OK.
+  - **Questa:** `D:\altera_lite\22.1\questa_fse\win64\` — instalado mas **não usado**
+    (UCRT quebrada: faltam `api-ms-win-crt-*.dll`; e precisa de licença). Opcional.
+- **Cuidado ao rodar pelo Git Bash:** ferramentas Intel/Questa podem falhar por
+  busca de DLL; rodar pelo PowerShell quando der erro de DLL. O `quartus_*` e o
+  `ghdl` funcionam bem pelo Git Bash (testado).
 - **Sem acentos/espaços** em pastas que as ferramentas tocam.
 
 ---
