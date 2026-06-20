@@ -32,7 +32,10 @@ entity regfile is
         rd  : in  std_logic_vector(4 downto 0);    -- endereço escrita
         wd  : in  std_logic_vector(XLEN-1 downto 0); -- dado a escrever
         rd1 : out std_logic_vector(XLEN-1 downto 0); -- saída leitura 1
-        rd2 : out std_logic_vector(XLEN-1 downto 0)  -- saída leitura 2
+        rd2 : out std_logic_vector(XLEN-1 downto 0); -- saída leitura 2
+        -- porta de depuração (3ª leitura, só para testbench/observação)
+        dbg_addr : in  std_logic_vector(4 downto 0) := (others => '0');
+        dbg_data : out std_logic_vector(XLEN-1 downto 0)
     );
 end entity regfile;
 
@@ -56,5 +59,9 @@ begin
            else regs(to_integer(unsigned(rs1)));
     rd2 <= (others => '0') when rs2 = "00000"
            else regs(to_integer(unsigned(rs2)));
+
+    -- Porta de depuração: lê qualquer registrador (x0 -> 0).
+    dbg_data <= (others => '0') when dbg_addr = "00000"
+                else regs(to_integer(unsigned(dbg_addr)));
 
 end architecture rtl;
