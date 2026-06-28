@@ -58,7 +58,7 @@ run_tb tb_alu     5us   || fail=1
 run_tb tb_regfile 10us  || fail=1
 run_tb tb_bin2bcd 5us   || fail=1
 run_tb tb_core    50us  || fail=1
-run_tb tb_calc    400us || fail=1
+run_tb tb_calc    8ms   || fail=1
 
 echo ""
 if [ "$fail" -eq 0 ]; then

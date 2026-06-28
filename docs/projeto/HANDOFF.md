@@ -30,9 +30,12 @@ jtagconfig         # deve listar "USB-Blaster" e o dispositivo 10M50
 cd /c/Users/joaom/Documents/Trab_AOC
 quartus_pgm -m jtag -o "p;output_files/riscv_de10lite.sof"
 ```
-**Demonstração da calculadora:** `SW[3:0]`=A, `SW[7:4]`=B, `SW[9:8]`=operação
-(00=A+B, 01=A−B, 10=A&B, 11=A|B). Resultado em **decimal com sinal** nos HEX;
-`LEDR9`=overflow, `LEDR8`=sinal negativo; **KEY0**=reset. Detalhes em `docs/GUIA.md §7`.
+**Demonstração da calculadora (ACUMULADOR, desde 2026-06-21):** `SW[7:0]`=valor
+(0–255), `SW[9:8]`=operação (00=+ 01=− 10=& 11=\|). **KEY1**=Enter/= (aplica
+`acc = acc <op> valor`, com debounce por software), **KEY0**=limpar (reset).
+Resultado em **decimal com sinal** nos HEX; `LEDR9`=overflow, `LEDR8`=negativo,
+`LEDR[1:0]`=operação. Detalhes em `docs/GUIA.md §7`. (Versão simples antiga A op B
+preservada em `asm/calc_simple.s`.)
 
 **Se a placa não for detectada:** instalar o driver do USB-Blaster II (pode exigir
 elevação) — em `D:\altera_lite\22.1\quartus\drivers\usb-blaster-ii\`.
@@ -191,5 +194,16 @@ reports                         # saídas de síntese coletadas
   Restou só a **placa física**.
 
 ---
+
+- **2026-06-21** — Placa gravada com sucesso pelo aluno (driver USB-Blaster
+  `VID_09FB&PID_6001` instalado via Gerenciador de Dispositivos; pasta
+  `drivers/usb-blaster/`). Calculadora simples (A op B, máx. soma 30 por causa dos
+  operandos de 4 bits) demonstrada OK. Decidimos evoluir para **calculadora
+  ACUMULADOR** (multiplexação no tempo): `SW[7:0]`=valor (0–255), `SW[9:8]`=op,
+  **KEY1**=Enter/= com **debounce por software**, **KEY0**=limpar. Reescrevi
+  `asm/calc.s` (42 instr; usa RAM-free, só regs+I/O), regerei a ROM, reescrevi
+  `sim/tb_calc.vhd` (5 pressões encadeadas) → **5/5 testbenches PASSED no GHDL**;
+  recompilei → **novo `.sof`** (0 erros, setup slack +293 ns). Versão antiga em
+  `asm/calc_simple.s`. **Falta: regravar o novo `.sof` na placa** (mesmo comando do §⭐).
 
 _Mantido por Claude Code. Atualizar §4, §5 e §7 a cada avanço significativo._

@@ -48,8 +48,20 @@ reports/ghdl/
 *.exe
 *.qdz
 
+# ===== Datasheets de fabricante (grandes; baixe pelos links do README) =====
+docs/datasheets/
+
+# ===== Logs / temporarios do Office =====
+*.log
+~$*
+
 # ===== SO / editor =====
 Thumbs.db
 desktop.ini
 .DS_Store
 *.swp
+
+# ===== Apresentacao / preparacao pessoal (nao publicar) =====
+docs/apresentacao_*.pptx
+docs/roteiro_*.pdf
+docs/plano_apresentacao.pdf

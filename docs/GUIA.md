@@ -137,8 +137,21 @@ Com a placa conectada (USB-Blaster):
 ```bash
 quartus_pgm -m jtag -o "p;output_files/riscv_de10lite.sof"
 ```
-Depois: `SW[3:0]`=A, `SW[7:4]`=B, `SW[9:8]`=operação (00=+ 01=- 10=& 11=|),
-resultado em decimal nos HEX, `KEY0`=reset.
+
+### Uso da calculadora ACUMULADOR (programa `asm/calc.s`)
+- `SW[7:0]` = **valor** a aplicar (0–255, em binário).
+- `SW[9:8]` = **operação**: `00`=+ · `01`=− · `10`=& · `11`=\|.
+- **KEY1** = **Enter/=** : aplica `acc = acc <op> valor` (uma vez por pressão).
+- **KEY0** = **limpar** (reset do processador → acumulador volta a 0).
+- **HEX0–5** = acumulador em decimal com sinal; **LEDR8**=negativo, **LEDR9**=overflow;
+  **LEDR[1:0]** = código da operação selecionada.
+
+Exemplo: KEY0 (zera) → SW=`00001010` op`00`, KEY1 → 10 → SW=`00010100` op`00`, KEY1 → 30
+→ SW=`00000101` op`01`, KEY1 → 25. O botão tem **debounce por software** (`calc.s`,
+sub-rotina `delay`), por isso 1 pressão = 1 operação.
+
+> A versão simples antiga (A op B num disparo) está preservada em `asm/calc_simple.s`.
+> Para voltar a ela: montar com `--vhdl mem/calc_rom_pkg.vhd` e recompilar (§5/§6).
 
 ---
 
